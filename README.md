@@ -3,9 +3,10 @@
 **Disclaimer: This plugin is still in development and is not ready for production use**
 
 
-tInteractions is a library for creating complex interactions with Citizens NPCs. It is designed to to easy to use purely
-through command line and offers developers the ability to register their own interaction types and requirements for use
-in their own plugins.
+tInteractions is a library for creating complex interactions with Citizens NPCs through the use of 
+Citizens already existing trait system. It is designed to to easy to use purely through command line 
+and offers developers the ability to register their own interaction types and requirements for use
+in their own plugins. 
 
 ## Requirements
 * Citizens Plugin
