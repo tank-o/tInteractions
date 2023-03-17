@@ -101,4 +101,8 @@ public class SequentialInteraction extends Trait {
     public void setRepeatable(boolean repeatable){
         isRepeatable = repeatable;
     }
+
+    public void resetPlayerPosition(Player player){
+        playerPositions.put(player.getUniqueId(),0);
+    }
 }

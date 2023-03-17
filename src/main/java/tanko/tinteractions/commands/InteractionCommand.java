@@ -43,6 +43,7 @@ public class InteractionCommand implements CommandExecutor {
                     case "remove" -> removeInteraction(player, Arrays.copyOfRange(args, 1, args.length), npc);
                     case "view" -> viewInteractions(player, npc);
                     case "select" -> selectInteraction(player, Arrays.copyOfRange(args, 1, args.length), npc);
+                    case "reset" -> resetInteractions(player, npc);
                     case "defaultMessage" -> defaultMessage(player, Arrays.copyOfRange(args, 1, args.length), npc);
                     default -> {
                         SequentialInteraction trait = npc.getTraitNullable(SequentialInteraction.class);
@@ -150,5 +151,15 @@ public class InteractionCommand implements CommandExecutor {
                 }
             }
         }
+    }
+
+    private void resetInteractions(Player player, NPC npc){
+        if (!npc.hasTrait(SequentialInteraction.class)){
+            player.sendMessage("§cNo interaction trait found");
+            return;
+        }
+        SequentialInteraction trait = npc.getOrAddTrait(SequentialInteraction.class);
+        trait.resetPlayerPosition(player);
+        player.sendMessage("§aCleared interactions from " + npc.getName());
     }
 }
