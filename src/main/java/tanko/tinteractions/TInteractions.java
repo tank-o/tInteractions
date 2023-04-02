@@ -8,7 +8,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import tanko.tinteractions.api.InteractionRegistry;
 import tanko.tinteractions.core.DefaultRegistry;
 import tanko.tinteractions.core.commands.interaction.InteractionCommand;
-import tanko.tinteractions.core.commands.RequirementCommand;
+import tanko.tinteractions.core.commands.requirement.RequirementCommand;
 import tanko.tinteractions.core.commands.interaction.sc.*;
 import tanko.tinteractions.core.persistence.ConfigWriter;
 import tanko.tinteractions.core.persistence.InteractionsFile;
@@ -37,6 +37,11 @@ public final class TInteractions extends JavaPlugin {
         InteractionCommand.register("select", new SelectCommand());
         InteractionCommand.register("reset", new ResetCommand());
         this.getCommand("requirements").setExecutor(new RequirementCommand());
+        RequirementCommand.register("add", new tanko.tinteractions.core.commands.requirement.sc.AddCommand());
+        RequirementCommand.register("remove", new tanko.tinteractions.core.commands.requirement.sc.RemoveCommand());
+        RequirementCommand.register("view", new tanko.tinteractions.core.commands.requirement.sc.ViewCommand());
+        RequirementCommand.register("select", new tanko.tinteractions.core.commands.requirement.sc.SelectCommand());
+
 
 
         // Register Traits

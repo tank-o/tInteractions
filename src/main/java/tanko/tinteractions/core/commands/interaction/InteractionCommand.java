@@ -9,21 +9,17 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
-import tanko.tinteractions.TInteractions;
 import tanko.tinteractions.api.Interaction;
-import tanko.tinteractions.core.commands.SubCommand;
+import tanko.tinteractions.core.commands.CommandHandler;
 import tanko.tinteractions.core.traits.InteractionTrait;
 import tanko.tinteractions.core.traits.MenuInteraction;
 import tanko.tinteractions.core.traits.SequentialInteraction;
 
 import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
+
 import java.util.Objects;
 
-public class InteractionCommand implements CommandExecutor {
-
-    private static final Map<String, SubCommand> commands = new HashMap<>();
+public class InteractionCommand extends CommandHandler implements CommandExecutor {
 
     /**
      * Function that runs when the ml command is executed
@@ -66,37 +62,6 @@ public class InteractionCommand implements CommandExecutor {
             player.sendMessage("§cNPC does not have an interaction trait");
         }
         return true;
-    }
-
-    /**
-     * Gets the SubCommand represnted by a specific Command
-     *
-     * @param cmd The name of the command to get
-     * @return The SubCommand of the command
-     * @throws CommandException when the command was not found. Should be caught.
-     */
-    SubCommand getCommand(String cmd) throws CommandException {
-        if (commands.containsKey(cmd)) {
-            return commands.get(cmd);
-        } else {
-            throw new CommandException("This command was not found.");
-        }
-    }
-
-    /**
-     * Registers a command
-     *
-     * @param cmd The command to register
-     * @param clazz The class to register the command to. Must implement
-     *        SubCommand.
-     */
-    public static void register(String cmd, SubCommand clazz) {
-        try {
-            Class.forName(clazz.getClass().getName());
-        } catch (ClassNotFoundException e) {
-            return;
-        }
-        commands.put(cmd, clazz);
     }
 
     private void defaultMessage(Player player, String[] args, NPC npc) {
