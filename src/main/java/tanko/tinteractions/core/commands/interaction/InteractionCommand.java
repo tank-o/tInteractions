@@ -16,7 +16,6 @@ import tanko.tinteractions.core.traits.MenuInteraction;
 import tanko.tinteractions.core.traits.SequentialInteraction;
 
 import java.util.Arrays;
-
 import java.util.Objects;
 
 public class InteractionCommand extends CommandHandler implements CommandExecutor {

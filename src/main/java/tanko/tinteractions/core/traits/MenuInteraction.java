@@ -5,8 +5,8 @@ import net.citizensnpcs.api.event.NPCRightClickEvent;
 import net.citizensnpcs.api.persistence.Persist;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
-import tanko.tinteractions.core.menus.InteractionMenu;
 import tanko.tinteractions.api.Interaction;
+import tanko.tinteractions.core.menus.InteractionMenu;
 
 import java.util.HashMap;
 

@@ -5,9 +5,9 @@ import net.citizensnpcs.api.persistence.Persist;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import tanko.tinteractions.api.Interaction;
 import tanko.tinteractions.core.persistence.ConfigReader;
 import tanko.tinteractions.core.persistence.ConfigWriter;
-import tanko.tinteractions.api.Interaction;
 
 import java.util.*;
 
