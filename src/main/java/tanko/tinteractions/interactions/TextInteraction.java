@@ -1,6 +1,7 @@
 package tanko.tinteractions.interactions;
 
 import net.citizensnpcs.api.npc.NPC;
+import org.bukkit.Material;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 import tanko.tinteractions.persistence.ConfigReader;
@@ -15,6 +16,7 @@ public class TextInteraction extends Interaction {
 
     public TextInteraction(String ID) {
         super(ID);
+        iconMaterial = Material.PAPER;
     }
 
     @Override

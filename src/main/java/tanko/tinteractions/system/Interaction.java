@@ -2,6 +2,7 @@ package tanko.tinteractions.system;
 
 import net.citizensnpcs.api.npc.NPC;
 import org.bukkit.ChatColor;
+import org.bukkit.Material;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 
@@ -11,6 +12,7 @@ import java.util.List;
 
 public abstract class Interaction {
     protected String ID;
+    protected Material iconMaterial = Material.DIRT;
     protected String interactionFinishMessage = null;
     protected LinkedHashMap<String,Requirement> requirements = new LinkedHashMap<>();
 
@@ -83,5 +85,9 @@ public abstract class Interaction {
 
     public List<Requirement> getRequirements() {
         return new ArrayList<>(requirements.values());
+    }
+
+    public Material getIconMaterial() {
+        return iconMaterial;
     }
 }

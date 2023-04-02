@@ -12,14 +12,13 @@ import tanko.tinteractions.system.Interaction;
 
 import java.util.*;
 
-public class SequentialInteraction extends Trait {
-    Map<String,Interaction> interactions = new LinkedHashMap<>();
+public class SequentialInteraction extends InteractionTrait {
     @Persist private final Map<UUID,Integer> playerPositions = new HashMap<>();
     @Persist private final List<String> defaultMessages = new ArrayList<>();
     @Persist private boolean isRepeatable = false;
 
     public SequentialInteraction() {
-        super("interaction");
+        super("seq-interaction");
     }
 
     @EventHandler
@@ -46,22 +45,6 @@ public class SequentialInteraction extends Trait {
                 playerPositions.put(player.getUniqueId(),position + 1);
             }
         }
-    }
-
-    public void addInteraction(Interaction interaction){
-        interactions.put(interaction.getID(),interaction);
-    }
-
-    public Interaction getInteraction(String ID){
-        return interactions.get(ID);
-    }
-
-    public void removeInteraction(String ID){
-        interactions.remove(ID);
-    }
-
-    public Collection<Interaction> getInteractions(){
-        return interactions.values();
     }
 
     public void addDefaultMessage(String message){

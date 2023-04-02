@@ -16,7 +16,7 @@ public final class ConfigWriter {
 
     public static void writeInteractions(SequentialInteraction trait){
         NPC npc = trait.getNPC();
-        Collection<Interaction> interactions = trait.getInteractions();
+        Collection<Interaction> interactions = trait.getInteractions().values();
         ConfigurationSection npcSection = InteractionsFile.getFile().getConfigurationSection(String.valueOf(npc.getId()));
         if (npcSection == null) npcSection = InteractionsFile.getFile().createSection(String.valueOf(npc.getId()));
         ConfigurationSection interactionsSection = npcSection.getConfigurationSection("interactions");
@@ -29,7 +29,7 @@ public final class ConfigWriter {
         InteractionsFile.save();
     }
 
-    private static void writeInteraction(ConfigurationSection section,Interaction interaction) {
+    private static void writeInteraction(ConfigurationSection section, Interaction interaction) {
         String type = TInteractions.getInteractionRegistry().getInteractionName(interaction.getClass());
         if (type == null) {
             Bukkit.getLogger().warning("Interaction not registered" + interaction.getID());

@@ -9,12 +9,12 @@ import java.util.*;
 
 public final class ConfigReader {
 
-    public static Map<String,Interaction> readInteractions(String npcId){
+    public static Map<String, Interaction> readInteractions(String npcId){
         ConfigurationSection npcSection = InteractionsFile.getFile().getConfigurationSection(npcId);
         if (npcSection == null) return new LinkedHashMap<>();
         ConfigurationSection interactionsSection = npcSection.getConfigurationSection("interactions");
         if (interactionsSection == null) return new LinkedHashMap<>();
-        LinkedHashMap<String,Interaction> interactions = new LinkedHashMap<>();
+        LinkedHashMap<String, Interaction> interactions = new LinkedHashMap<>();
         for (String key : interactionsSection.getKeys(false)){
             ConfigurationSection interactionSection = interactionsSection.getConfigurationSection(key);
             assert interactionSection != null;
