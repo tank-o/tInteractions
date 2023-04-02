@@ -16,7 +16,7 @@ public final class ConfigWriter {
 
     public static void writeInteractions(SequentialInteraction trait){
         NPC npc = trait.getNPC();
-        Collection<Interaction> interactions = trait.getInteractions();
+        Collection<Interaction> interactions = trait.getInteractions().values();
         ConfigurationSection npcSection = InteractionsFile.getFile().getConfigurationSection(String.valueOf(npc.getId()));
         if (npcSection == null) npcSection = InteractionsFile.getFile().createSection(String.valueOf(npc.getId()));
         ConfigurationSection interactionsSection = npcSection.getConfigurationSection("interactions");
@@ -29,12 +29,16 @@ public final class ConfigWriter {
         InteractionsFile.save();
     }
 
-    private static void writeInteraction(ConfigurationSection section,Interaction interaction) {
+    private static void writeInteraction(ConfigurationSection section, Interaction interaction) {
         String type = TInteractions.getInteractionRegistry().getInteractionName(interaction.getClass());
         if (type == null) {
             Bukkit.getLogger().warning("Interaction not registered" + interaction.getID());
         }
         section.set("type", TInteractions.getInteractionRegistry().getInteractionName(interaction.getClass()));
+        writePlayerCompleted(section.createSection("completed"), interaction.getCompleted());
+        section.set("icon", interaction.getIcon());
+        section.set("repeatable", interaction.isRepeatable());
+        section.set("name", interaction.getDisplayName());
         interaction.writeConfig(section);
         ConfigurationSection requirementsSection = section.getConfigurationSection("requirements");
         if (requirementsSection == null) requirementsSection = section.createSection("requirements");
@@ -49,6 +53,12 @@ public final class ConfigWriter {
     public static void writePlayerPositions(ConfigurationSection section, Map<UUID,Integer> playerPositions){
         for (UUID uuid : playerPositions.keySet()){
             section.set(uuid.toString(), playerPositions.get(uuid));
+        }
+    }
+
+    public static void writePlayerCompleted(ConfigurationSection section, Map<String,Boolean> playerCompleted){
+        for (String uuid : playerCompleted.keySet()){
+            section.set(uuid, playerCompleted.get(uuid));
         }
     }
 

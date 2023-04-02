@@ -51,7 +51,7 @@ public class RequirementCommand implements CommandExecutor {
                 switch (action) {
                     case "add" -> addRequirement(player, Arrays.copyOfRange(args, 1, args.length), interaction);
                     case "remove" -> removeRequirement(player, Arrays.copyOfRange(args, 1, args.length), interaction);
-                    case "view" -> viewRequirements(player,interaction);
+                    case "view" -> viewRequirements(player, interaction);
                     case "select" -> selectRequirement(player, Arrays.copyOfRange(args, 1, args.length), interaction);
                     default -> {
                         Requirement requirement = interaction.getRequirement(action);
@@ -90,7 +90,7 @@ public class RequirementCommand implements CommandExecutor {
         player.sendMessage("§aRemoved " + name + " from " + interaction.getID());
     }
 
-    private void viewRequirements(Player player,Interaction interaction){
+    private void viewRequirements(Player player, Interaction interaction){
         List<Requirement> requirements = interaction.getRequirements();
         if (requirements.size() == 0) {
             player.sendMessage("§aRequirements: §cNone");

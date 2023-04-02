@@ -6,7 +6,6 @@ import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import tanko.tinteractions.system.Requirement;
-import tanko.tinteractions.utils.Messaging;
 
 public class ItemRequirement extends Requirement {
     private ItemStack item = null;

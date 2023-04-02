@@ -9,11 +9,14 @@ import tanko.tinteractions.commands.InteractionCommand;
 import tanko.tinteractions.commands.RequirementCommand;
 import tanko.tinteractions.persistence.ConfigWriter;
 import tanko.tinteractions.persistence.InteractionsFile;
+import tanko.tinteractions.traits.MenuInteraction;
 import tanko.tinteractions.traits.SequentialInteraction;
 
 public final class TInteractions extends JavaPlugin {
+
     private static InteractionRegistry interactionRegistry;
     private static TInteractions instance;
+
     @Override
     public void onEnable() {
         // Register Command
@@ -28,7 +31,8 @@ public final class TInteractions extends JavaPlugin {
         this.getCommand("requirements").setExecutor(new RequirementCommand());
 
         // Register Traits
-        CitizensAPI.getTraitFactory().registerTrait(TraitInfo.create(SequentialInteraction.class).withName("interaction"));
+        CitizensAPI.getTraitFactory().registerTrait(TraitInfo.create(SequentialInteraction.class).withName("seq-interaction"));
+        CitizensAPI.getTraitFactory().registerTrait(TraitInfo.create(MenuInteraction.class).withName("menu-interaction"));
     }
 
     @Override

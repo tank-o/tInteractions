@@ -1,6 +1,7 @@
 package tanko.tinteractions;
 
 import org.bukkit.entity.Player;
+import tanko.tinteractions.interactions.PlayerCommandInteraction;
 import tanko.tinteractions.interactions.TextInteraction;
 import tanko.tinteractions.requirements.ItemRequirement;
 import tanko.tinteractions.system.Interaction;
@@ -13,12 +14,13 @@ import java.util.UUID;
 public class InteractionRegistry {
     private final Map<String,Class<? extends Interaction>> interactionTypes = new HashMap<>();
     private final Map<String,Class<? extends Requirement>> requirementTypes = new HashMap<>();
-    private final Map<UUID,Interaction> selectedInteractions = new HashMap<>();
+    private final Map<UUID, Interaction> selectedInteractions = new HashMap<>();
     private final Map<UUID,Requirement> selectedRequirements = new HashMap<>();
 
     public InteractionRegistry(){
         // Register default interactions
         registerInteraction("text", TextInteraction.class);
+        registerInteraction("command", PlayerCommandInteraction.class);
         // Register default requirements
         registerRequirement("item", ItemRequirement.class);
     }

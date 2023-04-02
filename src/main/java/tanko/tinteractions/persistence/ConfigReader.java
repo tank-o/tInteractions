@@ -1,20 +1,24 @@
 package tanko.tinteractions.persistence;
 
+import org.bukkit.Material;
 import org.bukkit.configuration.ConfigurationSection;
 import tanko.tinteractions.TInteractions;
 import tanko.tinteractions.system.Interaction;
 import tanko.tinteractions.system.Requirement;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.Map;
+import java.util.UUID;
 
 public final class ConfigReader {
 
-    public static Map<String,Interaction> readInteractions(String npcId){
+    public static Map<String, Interaction> readInteractions(String npcId){
         ConfigurationSection npcSection = InteractionsFile.getFile().getConfigurationSection(npcId);
         if (npcSection == null) return new LinkedHashMap<>();
         ConfigurationSection interactionsSection = npcSection.getConfigurationSection("interactions");
         if (interactionsSection == null) return new LinkedHashMap<>();
-        LinkedHashMap<String,Interaction> interactions = new LinkedHashMap<>();
+        LinkedHashMap<String, Interaction> interactions = new LinkedHashMap<>();
         for (String key : interactionsSection.getKeys(false)){
             ConfigurationSection interactionSection = interactionsSection.getConfigurationSection(key);
             assert interactionSection != null;
@@ -30,8 +34,13 @@ public final class ConfigReader {
             Class<? extends Interaction> interactionClass = TInteractions.getInteractionRegistry().getInteraction(type);
             // Create an instance of the interaction and cast it to the correct type
             Interaction interaction = interactionClass.getConstructor(String.class).newInstance(interactionSection.getName());
+            interaction.setCompleted(readPlayerCompleted(interactionSection.getConfigurationSection("completed")));
+            interaction.setIconMaterial(Material.valueOf(interactionSection.getString("icon")));
+            interaction.setRepeatable(interactionSection.getBoolean("repeatable"));
+            interaction.setDisplayName(interactionSection.getString("name"));
             interactionClass.cast(interaction);
             interaction.readConfig(interactionSection);
+
             ConfigurationSection requirementsSection = interactionSection.getConfigurationSection("requirements");
             if (requirementsSection != null) {
                 interaction.setRequirements(readRequirements(requirementsSection));
@@ -71,5 +80,14 @@ public final class ConfigReader {
             playerPositions.put(UUID.fromString(key), section.getInt(key));
         }
         return playerPositions;
+    }
+
+    public static Map<String,Boolean> readPlayerCompleted(ConfigurationSection section){
+        if (section == null) return new HashMap<>();
+        Map<String,Boolean> playerCompleted = new HashMap<>();
+        for (String key : section.getKeys(false)){
+            playerCompleted.put(key, section.getBoolean(key));
+        }
+        return playerCompleted;
     }
 }

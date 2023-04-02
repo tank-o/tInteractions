@@ -10,6 +10,8 @@ import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 import tanko.tinteractions.TInteractions;
 import tanko.tinteractions.system.Interaction;
+import tanko.tinteractions.traits.InteractionTrait;
+import tanko.tinteractions.traits.MenuInteraction;
 import tanko.tinteractions.traits.SequentialInteraction;
 
 import java.util.Arrays;
@@ -43,19 +45,20 @@ public class InteractionCommand implements CommandExecutor {
                     case "remove" -> removeInteraction(player, Arrays.copyOfRange(args, 1, args.length), npc);
                     case "view" -> viewInteractions(player, npc);
                     case "select" -> selectInteraction(player, Arrays.copyOfRange(args, 1, args.length), npc);
+                    case "reset" -> resetInteractions(player, npc);
                     case "defaultMessage" -> defaultMessage(player, Arrays.copyOfRange(args, 1, args.length), npc);
                     default -> {
-                        SequentialInteraction trait = npc.getTraitNullable(SequentialInteraction.class);
-                        if (trait == null) {
-                            player.sendMessage("§cInteraction command not found");
-                            return false;
+                        try {
+                            InteractionTrait trait = Objects.requireNonNullElse(npc.getTraitNullable(SequentialInteraction.class), npc.getTraitNullable(MenuInteraction.class));
+                            Interaction interaction = trait.getInteraction(action);
+                            if (interaction == null) {
+                                player.sendMessage("§cInteraction command not found");
+                                return false;
+                            }
+                            interaction.command(player, Arrays.copyOfRange(args, 1, args.length));
+                        } catch (NullPointerException npe) {
+                            player.sendMessage("§cNPC does not have an interaction trait");
                         }
-                        Interaction interaction = trait.getInteraction(action);
-                        if (interaction == null) {
-                            player.sendMessage("§cInteraction command not found");
-                            return false;
-                        }
-                        interaction.handleCommand(player, Arrays.copyOfRange(args, 1, args.length));
                     }
                 }
             }
@@ -67,8 +70,8 @@ public class InteractionCommand implements CommandExecutor {
         if (!(args.length > 0)) return;
         String type = args[0].toLowerCase();
         String name = args[1];
-        SequentialInteraction trait = npc.getOrAddTrait(SequentialInteraction.class);
         try {
+            InteractionTrait trait = Objects.requireNonNullElse(npc.getTraitNullable(SequentialInteraction.class), npc.getTraitNullable(MenuInteraction.class));
             Class<? extends Interaction> interactionClass = TInteractions.getInteractionRegistry().getInteraction(type);
             // Create an instance of the interaction and cast it to the correct type
             Interaction interaction = interactionClass.getConstructor(String.class).newInstance(name);
@@ -76,6 +79,8 @@ public class InteractionCommand implements CommandExecutor {
             trait.addInteraction(interaction);
             player.sendMessage("§aAdded " + interaction.getID() + " to " + npc.getName());
             TInteractions.getInteractionRegistry().selectInteraction(player, interaction);
+        } catch (NullPointerException npe) {
+            player.sendMessage("§cNPC does not have an interaction trait");
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -84,35 +89,45 @@ public class InteractionCommand implements CommandExecutor {
     private void removeInteraction(Player player, String[] args, NPC npc){
         if (!(args.length > 0)) return;
         String name = args[0];
-        SequentialInteraction trait = npc.getOrAddTrait(SequentialInteraction.class);
-        trait.removeInteraction(name);
-        player.sendMessage("§aRemoved " + name + " from " + npc.getName());
+        try {
+            InteractionTrait trait = Objects.requireNonNullElse(npc.getTraitNullable(SequentialInteraction.class), npc.getTraitNullable(MenuInteraction.class));
+            trait.removeInteraction(name);
+            player.sendMessage("§aRemoved " + name + " from " + npc.getName());
+        } catch (NullPointerException npe) {
+            player.sendMessage("§cNPC does not have an interaction trait");
+        }
     }
 
     private void viewInteractions(Player player, NPC npc){
-        SequentialInteraction trait = npc.getOrAddTrait(SequentialInteraction.class);
-        if (trait.getInteractions().size() == 0){
-            player.sendMessage("§cNo interactions found");
-            return;
-        }
-        player.sendMessage(ChatColor.GREEN + "Showing all interactions:");
-        for (Interaction i : trait.getInteractions()){
-            player.sendMessage(ChatColor.GREEN + i.getID() + " : " + i.getClass().getSimpleName());
+        try {
+            InteractionTrait trait = Objects.requireNonNullElse(npc.getTraitNullable(SequentialInteraction.class), npc.getTraitNullable(MenuInteraction.class));
+            if (trait.getInteractions().size() == 0) {
+                player.sendMessage("§cNo interactions found");
+                return;
+            }
+            player.sendMessage(ChatColor.GREEN + "Showing all interactions:");
+            for (Interaction i : trait.getInteractions().values()) {
+                player.sendMessage(ChatColor.GREEN + i.getID() + " : " + i.getClass().getSimpleName());
+            }
+        } catch (NullPointerException npe) {
+            player.sendMessage("§cNPC does not have an interaction trait");
         }
     }
 
     private void selectInteraction(Player player, String[] args, NPC npc){
         if (!(args.length > 0)) return;
-        String name = args[0];
-        SequentialInteraction trait = npc.getOrAddTrait(SequentialInteraction.class);
-        for (Interaction i : trait.getInteractions()){
-            if (i.getID().equals(name)){
-                TInteractions.getInteractionRegistry().selectInteraction(player, i);
-                player.sendMessage("§aSelected interaction: " + i.getID());
+        try {
+            String name = args[0];
+            InteractionTrait trait = Objects.requireNonNullElse(npc.getTraitNullable(SequentialInteraction.class), npc.getTraitNullable(MenuInteraction.class));
+            Interaction interaction = trait.getInteraction(name);
+            if (interaction == null) {
+                player.sendMessage("§cInteraction not found");
                 return;
             }
+            player.sendMessage("§cInteraction not found within " + npc.getName());
+        } catch (NullPointerException npe) {
+            player.sendMessage("§cNPC does not have an interaction trait");
         }
-        player.sendMessage("§cInteraction not found within " + npc.getName());
     }
 
     private void defaultMessage(Player player, String[] args, NPC npc) {
@@ -150,5 +165,15 @@ public class InteractionCommand implements CommandExecutor {
                 }
             }
         }
+    }
+
+    private void resetInteractions(Player player, NPC npc){
+        if (!npc.hasTrait(SequentialInteraction.class)){
+            player.sendMessage("§cNo interaction trait found");
+            return;
+        }
+        SequentialInteraction trait = npc.getOrAddTrait(SequentialInteraction.class);
+        trait.resetPlayerPosition(player);
+        player.sendMessage("§aCleared interactions from " + npc.getName());
     }
 }
