@@ -35,6 +35,10 @@ public final class ConfigWriter {
             Bukkit.getLogger().warning("Interaction not registered" + interaction.getID());
         }
         section.set("type", TInteractions.getInteractionRegistry().getInteractionName(interaction.getClass()));
+        writePlayerCompleted(section.createSection("completed"), interaction.getCompleted());
+        section.set("icon", interaction.getIcon());
+        section.set("repeatable", interaction.isRepeatable());
+        section.set("name", interaction.getDisplayName());
         interaction.writeConfig(section);
         ConfigurationSection requirementsSection = section.getConfigurationSection("requirements");
         if (requirementsSection == null) requirementsSection = section.createSection("requirements");
@@ -49,6 +53,12 @@ public final class ConfigWriter {
     public static void writePlayerPositions(ConfigurationSection section, Map<UUID,Integer> playerPositions){
         for (UUID uuid : playerPositions.keySet()){
             section.set(uuid.toString(), playerPositions.get(uuid));
+        }
+    }
+
+    public static void writePlayerCompleted(ConfigurationSection section, Map<String,Boolean> playerCompleted){
+        for (String uuid : playerCompleted.keySet()){
+            section.set(uuid, playerCompleted.get(uuid));
         }
     }
 

@@ -1,9 +1,7 @@
 package tanko.tinteractions.traits;
 
-import net.citizensnpcs.api.persistence.Persist;
 import net.citizensnpcs.api.trait.Trait;
 import org.bukkit.Bukkit;
-import org.bukkit.entity.Player;
 import tanko.tinteractions.persistence.ConfigReader;
 import tanko.tinteractions.persistence.ConfigWriter;
 import tanko.tinteractions.system.Interaction;

@@ -2,7 +2,6 @@ package tanko.tinteractions.traits;
 
 import net.citizensnpcs.api.event.NPCRightClickEvent;
 import net.citizensnpcs.api.persistence.Persist;
-import net.citizensnpcs.api.trait.Trait;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -41,8 +40,11 @@ public class SequentialInteraction extends InteractionTrait {
             }
             // Perform the interaction and its internal logic
             Interaction interaction = (Interaction) interactions.values().toArray()[position];
-            if (interaction.performInteractionSequence(player, getNPC())){
-                playerPositions.put(player.getUniqueId(),position + 1);
+            if (interaction != null){
+                interaction.performInteractionSequence(player, this.getNPC());
+                if (interaction.hasCompleted(player)){
+                    playerPositions.put(player.getUniqueId(),position + 1);
+                }
             }
         }
     }

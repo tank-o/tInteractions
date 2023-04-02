@@ -4,7 +4,6 @@ import de.studiocode.invui.item.ItemProvider;
 import de.studiocode.invui.item.builder.ItemBuilder;
 import de.studiocode.invui.item.impl.BaseItem;
 import org.bukkit.ChatColor;
-import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryClickEvent;
@@ -28,7 +27,7 @@ public class InteractionIcon extends BaseItem {
         ItemBuilder builder = new ItemBuilder(interaction.getIconMaterial());
         String selectedInteraction = menuInteraction.getSelectedInteraction(player);
         boolean selected = false;
-        builder.setDisplayName(ChatColor.YELLOW + interaction.getClass().getSimpleName());
+        builder.setDisplayName(ChatColor.YELLOW + interaction.getDisplayName());
         if (selectedInteraction != null) selected = selectedInteraction.equals(interaction.getID());
         if (selected) builder.addLoreLines(" ", ChatColor.GREEN + "§lSelected");
         return builder;
@@ -37,5 +36,6 @@ public class InteractionIcon extends BaseItem {
     @Override
     public void handleClick(@NotNull ClickType clickType, @NotNull Player player, @NotNull InventoryClickEvent event) {
         menuInteraction.setSelectedInteraction(player, interaction.getID());
+        player.closeInventory();
     }
 }

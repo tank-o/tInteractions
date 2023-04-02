@@ -22,15 +22,16 @@ public class PlayerCommandInteraction extends Interaction {
         if ((command.equals(""))) {
             player.sendMessage("§cCommand not set");
         }
-        if (player.performCommand(command)) {
-            player.sendMessage("§aCommand executed");
-        } else {
-            player.sendMessage("§cCommand failed");
-        }
+        player.performCommand(command);
     }
 
     @Override
-    public void handleCommand(Player player, String[] args) {
+    public void handleOtherCommand(Player player, String[] args) {
+        // No other commands to handle
+    }
+
+    @Override
+    public void handleSetCommand(Player player, String[] args) {
         if (args.length < 2) {
             player.sendMessage("§cYou must specify a command");
             return;

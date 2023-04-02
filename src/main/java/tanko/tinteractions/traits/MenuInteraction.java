@@ -3,17 +3,12 @@ package tanko.tinteractions.traits;
 import net.citizensnpcs.api.event.NPCLeftClickEvent;
 import net.citizensnpcs.api.event.NPCRightClickEvent;
 import net.citizensnpcs.api.persistence.Persist;
-import net.citizensnpcs.api.trait.Trait;
-import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import tanko.tinteractions.menus.InteractionMenu;
-import tanko.tinteractions.persistence.ConfigReader;
-import tanko.tinteractions.persistence.ConfigWriter;
 import tanko.tinteractions.system.Interaction;
 
 import java.util.HashMap;
-import java.util.Map;
 
 public class MenuInteraction extends InteractionTrait {
     @Persist HashMap<String,String> selectedInteractions = new HashMap<>();
@@ -34,7 +29,10 @@ public class MenuInteraction extends InteractionTrait {
             if (selectedInteraction == null){
                 new InteractionMenu(player, this.getNPC()).open();
             } else {
-                interactions.get(selectedInteraction).performInteractionSequence(player, this.getNPC());
+                Interaction interaction = interactions.get(selectedInteraction);
+                if (interaction != null){
+                    interaction.performInteractionSequence(player, this.getNPC());
+                }
             }
         }
     }
@@ -58,5 +56,4 @@ public class MenuInteraction extends InteractionTrait {
     public void setSelectedInteraction(Player player, String interaction){
         selectedInteractions.put(player.getUniqueId().toString(), interaction);
     }
-
 }

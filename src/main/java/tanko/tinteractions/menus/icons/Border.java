@@ -6,9 +6,7 @@ import org.bukkit.Material;
 
 public class Border extends SimpleItem {
     public Border() {
-        super(
-                new ItemBuilder(Material.BLACK_STAINED_GLASS_PANE)
-                .setDisplayName("")
-        );
+        super(new ItemBuilder(Material.BLACK_STAINED_GLASS_PANE)
+                .setDisplayName(""));
     }
 }

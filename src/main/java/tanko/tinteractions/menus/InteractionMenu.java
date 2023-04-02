@@ -40,14 +40,11 @@ public class InteractionMenu {
             return;
         }
         Collection<Interaction> interactions = menuInteraction.getInteractions().values();
-        for (int i = 0; i < interactions.size(); i++){
+        interactions.removeIf(interaction -> interaction.hasCompleted(player));
+        for (int i = 0; i < interactions.size(); i++) {
             Interaction interaction = interactions.toArray(new Interaction[0])[i];
             menu.setItem(interactionSlots.get(i), new InteractionIcon(player, interaction, menuInteraction));
         }
-    }
-
-    public void setTitle(String title){
-        this.title = title;
     }
 
     public void open() {

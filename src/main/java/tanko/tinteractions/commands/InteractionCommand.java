@@ -55,7 +55,7 @@ public class InteractionCommand implements CommandExecutor {
                                 player.sendMessage("§cInteraction command not found");
                                 return false;
                             }
-                            interaction.handleCommand(player, Arrays.copyOfRange(args, 1, args.length));
+                            interaction.command(player, Arrays.copyOfRange(args, 1, args.length));
                         } catch (NullPointerException npe) {
                             player.sendMessage("§cNPC does not have an interaction trait");
                         }
