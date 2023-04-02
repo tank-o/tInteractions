@@ -44,42 +44,26 @@ public class InteractionCommand implements CommandExecutor {
         }
 
         try {
-            if (args.length > 0) {
-                String action = args[0];
-                if (commands.containsKey(action)) {
-                    commands.get(action).execute(player,Arrays.copyOfRange(args, 1, args.length));
-                } else {
-                    player.sendMessage("§cInvalid command");
-                    return true;
-                }
+            if (args.length < 1) return false;
+            String action = args[0];
+            if (commands.containsKey(action)) {
+                commands.get(action).execute(player,Arrays.copyOfRange(args, 1, args.length));
             } else {
-                player.sendMessage("§cInvalid command");
+                // If the command is not one of the set subcommand, check if they are trying to run an interaction command
+                // and let the implementation handle it
+                InteractionTrait trait = Objects.requireNonNullElse(npc.getTraitNullable(SequentialInteraction.class), npc.getTraitNullable(MenuInteraction.class));
+                Interaction interaction = trait.getInteraction(action);
+                if (interaction == null) {
+                    player.sendMessage("§cInteraction command not found");
+                    return false;
+                }
+                interaction.command(player, Arrays.copyOfRange(args, 1, args.length));
+                return true;
             }
         } catch (CommandException e) {
             player.sendMessage("§c" + e.getMessage());
-        }
-
-        if (player.hasPermission(Objects.requireNonNull(command.getPermission()))) {
-            if (args.length > 0){
-                String action = args[0];
-                switch (action) {
-                    case "reset" -> resetInteractions(player, npc);
-                    case "defaultMessage" -> defaultMessage(player, Arrays.copyOfRange(args, 1, args.length), npc);
-                    default -> {
-                        try {
-                            InteractionTrait trait = Objects.requireNonNullElse(npc.getTraitNullable(SequentialInteraction.class), npc.getTraitNullable(MenuInteraction.class));
-                            Interaction interaction = trait.getInteraction(action);
-                            if (interaction == null) {
-                                player.sendMessage("§cInteraction command not found");
-                                return false;
-                            }
-                            interaction.command(player, Arrays.copyOfRange(args, 1, args.length));
-                        } catch (NullPointerException npe) {
-                            player.sendMessage("§cNPC does not have an interaction trait");
-                        }
-                    }
-                }
-            }
+        }  catch (NullPointerException npe) {
+            player.sendMessage("§cNPC does not have an interaction trait");
         }
         return true;
     }
