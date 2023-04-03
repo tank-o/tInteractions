@@ -6,7 +6,7 @@
 
     <groupId>tanko</groupId>
     <artifactId>tInteractions</artifactId>
-    <version>0.2.1</version>
+    <version>0.0.4</version>
     <packaging>jar</packaging>
 
     <name>tInteractions</name>
