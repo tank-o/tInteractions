@@ -48,7 +48,7 @@ public class RequirementCommand extends CommandHandler implements CommandExecuto
             if (args.length < 1) return false;
             String action = args[0];
             if (commands.containsKey(action)) {
-                commands.get(action).execute(player,Arrays.copyOfRange(args, 1, args.length));
+                getCommand(action).execute(player,Arrays.copyOfRange(args, 1, args.length));
             } else {
                 Requirement requirement = interaction.getRequirement(action);
                 if (requirement == null) {

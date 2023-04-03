@@ -38,17 +38,19 @@ public final class TInteractions extends JavaPlugin {
     }
 
     private void registerCommands() {
-        this.getCommand("interactions").setExecutor(new InteractionCommand());
-        InteractionCommand.register("add", new AddCommand());
-        InteractionCommand.register("remove", new RemoveCommand());
-        InteractionCommand.register("view", new ViewCommand());
-        InteractionCommand.register("select", new SelectCommand());
-        InteractionCommand.register("reset", new ResetCommand());
-        this.getCommand("requirements").setExecutor(new RequirementCommand());
-        RequirementCommand.register("add", new tanko.tinteractions.core.commands.requirement.sc.AddCommand());
-        RequirementCommand.register("remove", new tanko.tinteractions.core.commands.requirement.sc.RemoveCommand());
-        RequirementCommand.register("view", new tanko.tinteractions.core.commands.requirement.sc.ViewCommand());
-        RequirementCommand.register("select", new tanko.tinteractions.core.commands.requirement.sc.SelectCommand());
+        InteractionCommand interactionCommand = new InteractionCommand();
+        this.getCommand("interactions").setExecutor(interactionCommand);
+        interactionCommand.register("add", new AddCommand());
+        interactionCommand.register("remove", new RemoveCommand());
+        interactionCommand.register("view", new ViewCommand());
+        interactionCommand.register("select", new SelectCommand());
+        interactionCommand.register("reset", new ResetCommand());
+        RequirementCommand requirementCommand = new RequirementCommand();
+        this.getCommand("requirements").setExecutor(requirementCommand);
+        requirementCommand.register("add", new tanko.tinteractions.core.commands.requirement.sc.AddCommand());
+        requirementCommand.register("remove", new tanko.tinteractions.core.commands.requirement.sc.RemoveCommand());
+        requirementCommand.register("view", new tanko.tinteractions.core.commands.requirement.sc.ViewCommand());
+        requirementCommand.register("select", new tanko.tinteractions.core.commands.requirement.sc.SelectCommand());
     }
 
     public static InteractionRegistry getInteractionRegistry(){

@@ -6,7 +6,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class CommandHandler {
-    protected static final Map<String, SubCommand> commands = new HashMap<>();
+    protected final Map<String, SubCommand> commands = new HashMap<>();
 
     /**
      * Gets the SubCommand represnted by a specific Command
@@ -15,7 +15,7 @@ public class CommandHandler {
      * @return The SubCommand of the command
      * @throws CommandException when the command was not found. Should be caught.
      */
-    SubCommand getCommand(String cmd) throws CommandException {
+    protected SubCommand getCommand(String cmd) throws CommandException {
         if (commands.containsKey(cmd)) {
             return commands.get(cmd);
         } else {
@@ -30,7 +30,7 @@ public class CommandHandler {
      * @param clazz The class to register the command to. Must implement
      *        SubCommand.
      */
-    public static void register(String cmd, SubCommand clazz) {
+    public void register(String cmd, SubCommand clazz) {
         try {
             Class.forName(clazz.getClass().getName());
         } catch (ClassNotFoundException e) {
