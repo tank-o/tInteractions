@@ -4,9 +4,9 @@ import net.citizensnpcs.api.npc.NPC;
 import org.bukkit.Material;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
+import tanko.tinteractions.api.Interaction;
 import tanko.tinteractions.core.persistence.ConfigReader;
 import tanko.tinteractions.core.persistence.ConfigWriter;
-import tanko.tinteractions.api.Interaction;
 import tanko.tinteractions.core.utils.Messaging;
 
 import java.util.*;

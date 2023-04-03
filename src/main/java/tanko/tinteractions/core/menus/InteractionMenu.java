@@ -6,9 +6,9 @@ import de.studiocode.invui.gui.builder.guitype.GUIType;
 import de.studiocode.invui.window.impl.single.SimpleWindow;
 import net.citizensnpcs.api.npc.NPC;
 import org.bukkit.entity.Player;
+import tanko.tinteractions.api.Interaction;
 import tanko.tinteractions.core.menus.icons.Border;
 import tanko.tinteractions.core.menus.icons.InteractionIcon;
-import tanko.tinteractions.api.Interaction;
 import tanko.tinteractions.core.traits.MenuInteraction;
 
 import java.util.Collection;

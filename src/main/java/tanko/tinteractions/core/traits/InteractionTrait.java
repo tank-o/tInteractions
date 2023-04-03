@@ -2,9 +2,9 @@ package tanko.tinteractions.core.traits;
 
 import net.citizensnpcs.api.trait.Trait;
 import org.bukkit.Bukkit;
+import tanko.tinteractions.api.Interaction;
 import tanko.tinteractions.core.persistence.ConfigReader;
 import tanko.tinteractions.core.persistence.ConfigWriter;
-import tanko.tinteractions.api.Interaction;
 
 import java.util.HashMap;
 import java.util.Map;

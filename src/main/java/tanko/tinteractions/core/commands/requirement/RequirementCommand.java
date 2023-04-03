@@ -2,7 +2,6 @@ package tanko.tinteractions.core.commands.requirement;
 
 import net.citizensnpcs.api.CitizensAPI;
 import net.citizensnpcs.api.npc.NPC;
-import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandException;
 import org.bukkit.command.CommandExecutor;
@@ -16,8 +15,6 @@ import tanko.tinteractions.core.commands.CommandHandler;
 import tanko.tinteractions.core.traits.SequentialInteraction;
 
 import java.util.Arrays;
-import java.util.List;
-import java.util.Objects;
 
 public class RequirementCommand extends CommandHandler implements CommandExecutor {
 
@@ -51,7 +48,7 @@ public class RequirementCommand extends CommandHandler implements CommandExecuto
             if (args.length < 1) return false;
             String action = args[0];
             if (commands.containsKey(action)) {
-                commands.get(action).execute(player,Arrays.copyOfRange(args, 1, args.length));
+                getCommand(action).execute(player,Arrays.copyOfRange(args, 1, args.length));
             } else {
                 Requirement requirement = interaction.getRequirement(action);
                 if (requirement == null) {

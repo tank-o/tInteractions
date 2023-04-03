@@ -6,7 +6,7 @@ import org.bukkit.configuration.ConfigurationSection;
 import tanko.tinteractions.TInteractions;
 import tanko.tinteractions.api.Interaction;
 import tanko.tinteractions.api.Requirement;
-import tanko.tinteractions.core.traits.SequentialInteraction;
+import tanko.tinteractions.core.traits.InteractionTrait;
 
 import java.util.Collection;
 import java.util.Map;
@@ -14,7 +14,7 @@ import java.util.UUID;
 
 public final class ConfigWriter {
 
-    public static void writeInteractions(SequentialInteraction trait){
+    public static void writeInteractions(InteractionTrait trait){
         NPC npc = trait.getNPC();
         Collection<Interaction> interactions = trait.getInteractions().values();
         ConfigurationSection npcSection = InteractionsFile.getFile().getConfigurationSection(String.valueOf(npc.getId()));

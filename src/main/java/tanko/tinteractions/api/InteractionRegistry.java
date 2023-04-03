@@ -31,4 +31,6 @@ public interface InteractionRegistry {
     void registerRequirement(String type, Class<? extends Requirement> requirementClass);
 
     String getRequirementName(Class<? extends Requirement> requirementClass);
+
+    void shutdown();
 }
