@@ -80,7 +80,7 @@ public abstract class Interaction {
             displayName = String.join(" ", Arrays.copyOfRange(args, 1, args.length));
             player.sendMessage("§aDisplay name set to: " + displayName);
         } else {
-            handleSetCommand(player,Arrays.copyOfRange(args, 1, args.length));
+            handleSetCommand(player,args);
         }
     }
 
