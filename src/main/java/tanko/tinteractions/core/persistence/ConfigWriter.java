@@ -36,7 +36,7 @@ public final class ConfigWriter {
         }
         section.set("type", TInteractions.getInteractionRegistry().getInteractionName(interaction.getClass()));
         writePlayerCompleted(section.createSection("completed"), interaction.getCompleted());
-        section.set("icon", interaction.getIcon());
+        section.set("icon", interaction.getIcon().toString());
         section.set("repeatable", interaction.isRepeatable());
         section.set("name", interaction.getDisplayName());
         interaction.writeConfig(section);
