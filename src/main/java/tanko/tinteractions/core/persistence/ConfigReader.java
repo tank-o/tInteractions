@@ -1,5 +1,6 @@
 package tanko.tinteractions.core.persistence;
 
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.configuration.ConfigurationSection;
 import tanko.tinteractions.TInteractions;
@@ -47,6 +48,7 @@ public final class ConfigReader {
             }
             return interaction;
         } catch (Exception e){
+            Bukkit.getLogger().warning("Failed to load interaction " + interactionSection.getName());
             return null;
         }
     }

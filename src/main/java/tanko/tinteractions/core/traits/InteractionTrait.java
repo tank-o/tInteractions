@@ -38,6 +38,12 @@ public class InteractionTrait extends Trait {
         interactions.put(interaction.getID(), interaction);
     }
 
+    public void reloadInteractions(){
+        String npcID = String.valueOf(getNPC().getId());
+        interactions.clear();
+        interactions.putAll(ConfigReader.readInteractions(npcID));
+    }
+
     public Interaction getInteraction(String ID){
         return interactions.get(ID);
     }

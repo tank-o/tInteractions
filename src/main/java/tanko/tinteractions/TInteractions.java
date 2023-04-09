@@ -1,6 +1,7 @@
 package tanko.tinteractions;
 
 import net.citizensnpcs.api.CitizensAPI;
+import net.citizensnpcs.api.npc.NPC;
 import net.citizensnpcs.api.trait.TraitInfo;
 import org.bukkit.plugin.java.JavaPlugin;
 import tanko.tinteractions.api.InteractionRegistry;
@@ -8,9 +9,13 @@ import tanko.tinteractions.core.DefaultRegistry;
 import tanko.tinteractions.core.commands.interaction.InteractionCommand;
 import tanko.tinteractions.core.commands.interaction.sc.*;
 import tanko.tinteractions.core.commands.requirement.RequirementCommand;
+import tanko.tinteractions.core.persistence.ConfigReader;
 import tanko.tinteractions.core.persistence.InteractionsFile;
+import tanko.tinteractions.core.traits.InteractionTrait;
 import tanko.tinteractions.core.traits.MenuInteraction;
 import tanko.tinteractions.core.traits.SequentialInteraction;
+
+import java.util.Objects;
 
 public final class TInteractions extends JavaPlugin {
     private static InteractionRegistry interactionRegistry;
@@ -55,5 +60,15 @@ public final class TInteractions extends JavaPlugin {
 
     public static InteractionRegistry getInteractionRegistry(){
         return interactionRegistry;
+    }
+
+    public static void reloadNPCs(){
+        // Go through each of the NPCs and reload their interactions
+        for (NPC npc : CitizensAPI.getNPCRegistry()){
+            try {
+                InteractionTrait trait = Objects.requireNonNullElse(npc.getTraitNullable(SequentialInteraction.class), npc.getTraitNullable(MenuInteraction.class));
+                trait.reloadInteractions();
+            } catch (IllegalArgumentException ignored){ }
+        }
     }
 }
