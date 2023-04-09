@@ -1,28 +1,26 @@
 package tanko.tinteractions.core.menus;
 
-import de.studiocode.invui.gui.GUI;
-import de.studiocode.invui.gui.builder.GUIBuilder;
-import de.studiocode.invui.gui.builder.guitype.GUIType;
-import de.studiocode.invui.window.impl.single.SimpleWindow;
 import net.citizensnpcs.api.npc.NPC;
 import org.bukkit.entity.Player;
 import tanko.tinteractions.api.Interaction;
 import tanko.tinteractions.core.menus.icons.Border;
 import tanko.tinteractions.core.menus.icons.InteractionIcon;
 import tanko.tinteractions.core.traits.MenuInteraction;
+import xyz.xenondevs.invui.gui.Gui;
+import xyz.xenondevs.invui.window.Window;
 
 import java.util.Collection;
 import java.util.List;
 
 public class InteractionMenu {
-    protected GUI menu;
+    protected Gui menu;
     protected String title = "Select Interaction";
     protected Player player;
     List<Integer> interactionSlots = List.of(20, 22, 21, 13, 31);
 
     public InteractionMenu(Player player, NPC npc){
         this.player = player;
-        menu = new GUIBuilder<>(GUIType.NORMAL)
+        menu = Gui.normal()
                 .setStructure(
                         "# # # # # # # # #",
                         "# . . . . . . . #",
@@ -52,6 +50,11 @@ public class InteractionMenu {
             player.sendMessage("Menu not initialized, Contact an admin");
             return;
         }
-        new SimpleWindow(player, title, menu).show();
+        Window window = Window.single()
+                .setViewer(player)
+                .setGui(menu)
+                .setTitle(title)
+                .build();
+        window.open();
     }
 }

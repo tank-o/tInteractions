@@ -1,8 +1,5 @@
 package tanko.tinteractions.core.menus.icons;
 
-import de.studiocode.invui.item.ItemProvider;
-import de.studiocode.invui.item.builder.ItemBuilder;
-import de.studiocode.invui.item.impl.BaseItem;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
@@ -10,8 +7,14 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.jetbrains.annotations.NotNull;
 import tanko.tinteractions.api.Interaction;
 import tanko.tinteractions.core.traits.MenuInteraction;
+import xyz.xenondevs.invui.item.Item;
+import xyz.xenondevs.invui.item.ItemProvider;
+import xyz.xenondevs.invui.item.builder.ItemBuilder;
+import xyz.xenondevs.invui.item.impl.AbstractItem;
+import xyz.xenondevs.invui.item.impl.SimpleItem;
+import xyz.xenondevs.invui.item.impl.SuppliedItem;
 
-public class InteractionIcon extends BaseItem {
+public class InteractionIcon extends AbstractItem {
     private final Interaction interaction;
     private final Player player;
     private final MenuInteraction menuInteraction;

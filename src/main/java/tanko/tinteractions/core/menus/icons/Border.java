@@ -1,8 +1,9 @@
 package tanko.tinteractions.core.menus.icons;
 
-import de.studiocode.invui.item.builder.ItemBuilder;
-import de.studiocode.invui.item.impl.SimpleItem;
+
 import org.bukkit.Material;
+import xyz.xenondevs.invui.item.builder.ItemBuilder;
+import xyz.xenondevs.invui.item.impl.SimpleItem;
 
 public class Border extends SimpleItem {
     public Border() {
