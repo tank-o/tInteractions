@@ -16,7 +16,7 @@ public class InteractionMenu {
     protected Gui menu;
     protected String title = "Select Interaction";
     protected Player player;
-    List<Integer> interactionSlots = List.of(20, 22, 21, 13, 31);
+    List<Integer> interactionSlots = List.of(22, 20, 24, 21, 23);
 
     public InteractionMenu(Player player, NPC npc){
         this.player = player;

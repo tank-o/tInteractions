@@ -1,6 +1,7 @@
 package tanko.tinteractions.core.interactions;
 
 import net.citizensnpcs.api.npc.NPC;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
@@ -31,7 +32,7 @@ public class TextInteraction extends Interaction {
 
     @Override
     public boolean completeChecks(Player player, NPC npc) {
-        return playerPositions.getOrDefault(player.getUniqueId(),0) <= messages.size();
+        return playerPositions.getOrDefault(player.getUniqueId(),0) == messages.size() - 1;
     }
 
     @Override
@@ -51,9 +52,9 @@ public class TextInteraction extends Interaction {
     @Override
     public void viewInteractionInfo(Player player){
         super.viewInteractionInfo(player);
-        player.sendMessage("Messages: ");
+        player.sendMessage("§e===== §bText Interaction §e=====");
         for (String message : messages){
-            player.sendMessage(messages.indexOf(message) + " -> " + message);
+            player.sendMessage(ChatColor.WHITE + String.valueOf(messages.indexOf(message)) + " -> §e" + message);
         }
     }
 
